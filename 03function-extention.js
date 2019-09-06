@@ -170,13 +170,44 @@ m2({ x: 3 });
     {
         function factorial1( num ){
             if( num === 1 ) return 1;
-            return num * factorial( num - 1 ); 
+            return num * factorial1( num - 1 ); 
         }
 
         function factorial2( num, total ){
             if( num === 1 ) return total;
             return factorial2( num - 1, num * total )
         }
+
+        factorial1(5);
+        console.log('factorial2(5)---->',factorial2(5,1));
+        
+        function tailFactorial( n , total ){
+            if( n === 1 ) return total;
+            return tailFactorial( n - 1 , n * total);
+        }
+        function factorial3( n ){
+            return tailFactorial( n, 1 );
+        }
+
+        factorial3(5);
+
+        function curring( fn, total ){
+            return function( n ){
+                return fn.call( this, n, total )
+            }
+        }
+        const factorial4 = curring( tailFactorial, 1 );
+
+        factorial4(5);
+
+        function factorial5( n, total = 1 ){
+            if( n === 1 ) return total;
+            return factorial5( n - 1, n * total );
+        }
+
+        factorial5( 5 );
+
+        console.log('factorial(5)',factorial1(5),factorial2(5,1),factorial3(5),factorial4(5),factorial5(5));
     }
-    
+
     
