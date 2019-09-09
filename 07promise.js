@@ -133,7 +133,7 @@ const { log } = console;
 // 7.promise 实现运动
     {   
         // 参数：dom节点，运动的属性，持续时间
-        // 计算给出的持续时间内运动的速度
+        // **计算当前的属性值
         // 运动
         // 清除定时器
         const move = (obj,attr,target,duration)=>{
