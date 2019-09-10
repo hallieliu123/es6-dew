@@ -54,3 +54,5 @@ const { log } = console;
         log(i.next());
         log(i.next());
     }
+// 解构赋值，for..of,...扩展运算符这些内部都是自动调用iterator接口
+// 数组遍历会调用iterator接口，所以在接收数组为参数的场合都调用了遍历器（iterator）接口: Array.from();Promise.all(),Promise.race(),Set([]),Map();

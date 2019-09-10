@@ -93,7 +93,7 @@ const { log } = console;
             log('key2,value2--->',key2,value2);
         }
     }
-// 6. Object.setPrototypeof(),Object.getPrototypeOf(),Object.create()
+// 6. Object.setPrototypeof()覆盖原来的__proto__,Object.getPrototypeOf(),Object.create()
 // 7. Object.getOwnPropertyDescriptors()
 // 8. 对象的扩展运算符
     {   
