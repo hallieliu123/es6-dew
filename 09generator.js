@@ -42,10 +42,11 @@ const { log } = console;
                 }  
             }
         };
-        // for(let value of obj1 ){
+        // for(let value of obj1 ){  // 自动调用Symbol.iterator方法
         //     log('value--->',value);
         // }
         let it = obj1[Symbol.iterator]();
+        // log('obj1---->',[...obj1]);
         // log('obj1--->',it.next());
         // log('obj1--->',it.next());
         // log('obj1--->',it.next());
@@ -274,4 +275,6 @@ const { log } = console;
 //  线程是程序执行时的最小单位，它是进程的一个执行流，是CPU调度和分派的基本单位，一个进程可以由很多个线程组成，线程间共享进程的所有资源。
 
 // 区别：1.进程是资源分配的最小单位，线程是程序执行的最小单位。2.一个进程可以有多个线程，每个进程有自己独立的内存空间，线程之间共享内存空间。
+
+
 

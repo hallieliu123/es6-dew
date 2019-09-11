@@ -155,7 +155,7 @@ m2({ x: 3 });
         let a2 = insert( 10 ).into( [1,2] ).after(1);
         console.log('a2--->',a2);
     }
-    // 管道机制部署   第一个函数的返回值是第二个函数的参入，依次类推～
+    // 管道机制部署   第一个函数的返回值是第二个函数的参入，依次类推～  -- 妙哉妙哉 ！！！
     {
         const pipeline = (...funcs) => value => funcs.reduce((prev,cur)=>{
             return cur(prev);
