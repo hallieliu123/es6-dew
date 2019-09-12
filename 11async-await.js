@@ -1,5 +1,5 @@
 const { log } = console;
-
+// async 其实是生成器generator的语法糖
 // 1. async 函数内的 await 后面跟 promise对象，也可以是原始类型值(但会被转成一个立即resolve的promise对象。这时是同步操作 );
 // 2. async 函数执行时一旦遇到 await 就先返回，先执行其他函数。async 函数返回一个promise对象。.then(()=>{});
 
