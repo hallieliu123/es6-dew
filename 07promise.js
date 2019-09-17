@@ -31,19 +31,19 @@ const { log } = console;
             return res('ok');
         })
         .then( data => {
-            // log('data--->',data);
-            a
-            // return data
+            log('data--->',data);
+            abc
+            return data
         })
         .then( result1=>{
             // log('result1--->',result1);
         })
         .catch(err=>{
-            // log('err--->',err);
+            log('err-1-->',err);
             return err
         })
         .then(result2=>{
-            // log('result2--->',result2);
+            log('result2--->',result2); 
         });
 
         // then函数中自定义promise对象
@@ -58,6 +58,7 @@ const { log } = console;
         });
 
         // resolve(promise) 情况, 此时p1的状态决定了p2的状态，p2自身状态无效
+        // reject(promise) 情况, 此时p2状态还是rejected.
         {
             let p1 = new Promise((res,rej)=>{
                 setTimeout(()=>{
@@ -69,10 +70,10 @@ const { log } = console;
             let p2 = new Promise((res,rej)=>{
                 res(p1);
             });
-            // log('p2--->',p2);
+            log('p2--->',p2);
         }
     }
-// 4.promise 静态方法，resolve(),reject(),all(),race()
+// 4.promise 静态方法，resolve(),reject(),all(),race(),finally()
     {
         // resolve(),reject()
         let p1 = new Promise((res,rej)=>{
@@ -127,7 +128,7 @@ const { log } = console;
         const func2 = () => setTimeout(()=>{ log('first') },1000);
         // const func2 = () => Promise.resolve('first').then(f);
         (async ()=>func2())()
-        log('next');
+        // log('next');
     }
 
 // 7.promise 实现运动
@@ -158,4 +159,11 @@ const { log } = console;
             .then(()=>move(oDiv,'left',200,1000))
     }
 
+// 8.手写promise静态方法finally()
+    {
 
+    }
+// 9.手写promise静态方法all();
+    {
+        
+    }
