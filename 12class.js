@@ -196,9 +196,10 @@ const { log } = console;
         let oDiv = document.getElementById('a');
         let a1 = new A(oDiv);
         // log(a1.html);
-        a1.html = 789;
+        // a1.html = 789;
         // log(a1.html);
-        // log(Object.getPrototypeOf(a1));
+        log(Object.getPrototypeOf(a1)); // html成为了实例对象的访问器属性
+        log(a1);
         let des = Object.getOwnPropertyDescriptor(A.prototype,"html");
     //    log(des);
     //    log(A.prototype);
