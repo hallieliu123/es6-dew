@@ -51,7 +51,7 @@ const { log } = console;
         matchVal1(); // 0,1
         matchVal2(); // 0,1  
         
-        matchVal3(); // 报错  - 这个才能体现出来给函数参数指定默认值的重要性
+        // matchVal3(); // 报错  - 这个才能体现出来给函数参数指定默认值的重要性
     }
 
 
@@ -60,5 +60,14 @@ const { log } = console;
 
 
 
+
+// 字符串的扩展
+// includes(),startsWith(),endsWith(),模版字符串
+    {
+        let str = 'hello';
+        log(str.includes('l'));
+        log(str.startsWith('he'));
+        log(str.endsWith('lo'));
+    }
 
 
