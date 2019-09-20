@@ -1,6 +1,6 @@
-// 1.函数默认值
+// 1.函数参数默认值
 
-// 2.解构赋值与函数默认值
+// 2.解构赋值与函数参数默认值
 
 //   区分函数参数中对  对象的解构赋值默认值 和 函数参数的默认值
 
@@ -27,7 +27,7 @@ m2({ x: 3 });
 
 // 3. 函数参数作用域
 
-{
+{  // 以下俩例子也太变态了。完全没有实际意义么
     var x = 1;
     function foo( x, y = function(){ x = 2 }){
         
@@ -45,6 +45,7 @@ m2({ x: 3 });
 }
 
 {
+    var x = 1;
     function foo( x, y = function(){ x = 2 } ){
         
         x = 3;
@@ -60,7 +61,7 @@ m2({ x: 3 });
 
 }
 
-// 4.函数参数是惰性求值的
+// 4.函数参数默认值是惰性求值的
 
     function throwIfMissing(){
         throw new Error( 'Missing Parameter!' );
@@ -109,9 +110,9 @@ m2({ x: 3 });
                 this.s2 ++;
             },1000)
         }
-        var myTimer = new Timer();
-        // setTimeout(()=>{ console.log( 's1--->', myTimer.s1 )},3100); // 
-        // setTimeout(()=>{ console.log( 's2--->', myTimer.s2 )},3100); //
+        var myTimer = new Timer(); 
+        // setTimeout(()=>{ console.log( 's1--->', myTimer.s1 )},3100); // 3
+        // setTimeout(()=>{ console.log( 's2--->', myTimer.s2 )},3100); // NaN
     }
     {
         function foo(){
@@ -130,7 +131,7 @@ m2({ x: 3 });
     }
 
     // 箭头函数嵌套使用
-        //实现数组中插入一个元素
+        // 实现数组中插入一个元素
     {
         function insert(value){
             return {

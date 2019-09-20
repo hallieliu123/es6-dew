@@ -1,7 +1,7 @@
 
 const { log } = console;
 
-// 1.Set 基本使用，属性和方法; 只要有遍历接口都可以使用都可以转化成set数据结构
+// 1.Set 基本使用，属性和方法; 只要有遍历接口都可以使用都可以转化成set数据结构 
     {
         let s1 = new Set([2,3,4]);
         s1.add(1).add(5).add(6);
@@ -43,16 +43,16 @@ const { log } = console;
         let a1 = [0,1,2,3,4];
         let a2 = [3,4,5,6,7];
         
-        let intersect = a1.filter( item => a2.includes(item) );
+        let intersect = a1.filter( item => a2.includes(item) ); 
         // log('intersect--->',intersect);
 
         let union = [...new Set([...a1,...a2])];
         // log('union--->',union);
 
         let difference = a1.filter( item => !a2.includes(item) );
-        // log('difference--->',difference);
+        // log('difference--->',difference); 
     }
-// 3. map 基本使用，键可以是 对象 / 数组 / set / map 
+// 3. map 基本使用，键可以是 *对象 / 数组 / set / map 
 // 4. map 属性和方法
     {
         // let m1 = new Map();
@@ -92,7 +92,7 @@ const { log } = console;
         // log( entries.next() ); 
         // m2.forEach((value,key,m2)=>{ log(key,value,m2); });
     }
-// 6. map 与其他数据结构的转换： 数组 / 对象 / json
+// 6. map 与其他数据结构的转换： 数组 / 对象 / json 
     {
         // let m3 = new Map().set('name','Simon').set({name:'Blue'},'secret');
         // log([...m3]);

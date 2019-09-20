@@ -24,7 +24,7 @@ const { log } = console;
         log(g.next());
         log(g.next());
     }
-// 3. 使用generator包装对象，用于使用for..of..遍历
+// 3. 使用generator包装对象，用于使用for..of..遍历    
     {
         function* iterateObj(obj){
             for(let key of Object.keys(obj)){
@@ -34,7 +34,7 @@ const { log } = console;
         let obj = {'name':'Miya','title':'princess','age':'15'};
         for(let item of iterateObj(obj)){
             log('[key,value]',item);
-        } 
+        }
     }
 // 4. 模拟 iterator 接口
     {
@@ -54,5 +54,5 @@ const { log } = console;
         log(i.next());
         log(i.next());
     }
-// 解构赋值，for..of,...扩展运算符这些内部都是自动调用iterator接口
+// 解构赋值，for..of,...扩展运算符这些内部都是自动调用iterator接口 
 // 数组遍历会调用iterator接口，所以在接收数组为参数的场合都调用了遍历器（iterator）接口: Array.from();Promise.all(),Promise.race(),Set([]),Map();

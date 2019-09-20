@@ -12,7 +12,7 @@ const { log } = console;
         } 
         obj1.test();
 
-        let obj2 = {
+        let obj2 = { // 取值器 / 赋值器 
             x: 10,
             get y(){
                 return this.x;

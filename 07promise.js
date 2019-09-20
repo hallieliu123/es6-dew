@@ -7,12 +7,12 @@ const { log } = console;
         });
         // log('p1--->',p1);
     }
-// 2. 执行顺序问题，先执行宏任务，再执行微任务，本轮执行结束后，下一轮再执行被推入栈的任务
+// 2. ***执行顺序问题，先执行宏任务，再执行微任务，本轮执行结束后，下一轮再执行被推入栈的任务 
     {
         // log('1');
         // setTimeout(()=>{ log('2') },0);
         // setTimeout(()=>{ log('3') },0);
-        // let p1 = new Promise((res,rej)=>{
+        // let p1 = new Promise((res,rej)=>{  
         //     log('4');
         //     return res()
         // }).then(()=>{
@@ -60,7 +60,7 @@ const { log } = console;
         // resolve(promise) 情况, 此时p1的状态决定了p2的状态，p2自身状态无效
         // reject(promise) 情况, 此时p2状态还是rejected.
         {
-            let p1 = new Promise((res,rej)=>{
+            let p1 = new Promise((res,rej)=>{ 
                 setTimeout(()=>{
                     // log('p1');
                     return res('p1 ok');
@@ -121,9 +121,9 @@ const { log } = console;
     }
 // 5. Promise.resolve()的promise执行顺序问题-- 2 中已探究
 //    参数是promise对象直接返回，不是promise对象转为立即resolved的promise对象
-// 6.同步任务同步执行，异步任务异步执行
+// 6.同步任务同步执行，异步任务异步执行(想用promise包装它，不管它是同步还是异步操作的函数)
     {
-        const f = ( data ) => { log('data--->',data) };
+        const f = ( data ) => log('data--->',data);
         const func1 = () => log('first');
         const func2 = () => setTimeout(()=>{ log('first') },1000);
         // const func2 = () => Promise.resolve('first').then(f);
@@ -137,10 +137,10 @@ const { log } = console;
         // **计算当前的属性值
         // 运动
         // 清除定时器
-        const move = (obj,attr,target,duration)=>{
+        const move = (obj,attr,target,duration)=>{ 
             let o = parseInt(window.getComputedStyle(obj)[attr]);
             let d = target - o;
-            let temp = Date.now(); 
+            let temp = Date.now();
             return new Promise(res=>{
                 let myTimer = setInterval(()=>{
                     let t = Date.now() - temp;
@@ -218,7 +218,7 @@ const { log } = console;
                  });
                  if( rej ) return Promise.reject('出错啦。。。');
             }
-            return Promise.resolve(results);
+            return Promise.resolve(results); 
         }   
     }
 

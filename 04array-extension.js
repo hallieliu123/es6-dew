@@ -2,8 +2,8 @@
     const { log } = console; 
 
 // 1. 扩展运算符 ...
-    {
-        function foo( x, y, z ){}
+    {  
+        function foo( x, y, z ){} 
         let a1 = [ 1, 2, 3 ];
         foo( ...a1 );
 

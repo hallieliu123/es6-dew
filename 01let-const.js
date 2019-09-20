@@ -53,13 +53,13 @@ let { log } = console;
             Object.freeze(obj);
             for(let key in obj){ 
                 if( typeof obj[key] == 'object'){
-                    constantize(obj[key])
+                    constantize(obj[key]);
                 }
             }
         }
     }
 
-// 至此，声明变量的方式都有: var,function; 声明的对象属于顶层对象window/global //  let const class 不属于顶层对象属性;
+// 至此，声明变量的方式都有: var,function; 声明的对象属于顶层对象window/global  //  let const class 不属于顶层对象属性;
 
 
 
@@ -90,4 +90,5 @@ let { log } = console;
 // 注意for...in...迭代 自身可枚举属性 + 继承属性(es5中除从原生构造函数外继承的属性外，其他皆可获取。es6中,
 // 从父类继承的父类自身属性与子类合并在一起成为子类自身的属性了，不可遍历es6类创建对象上原型上的属性。）
 
-// typeof 检测 number / string / boolean / undefined / object
+// typeof 检测 number / string / boolean / undefined / object / function
+

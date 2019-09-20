@@ -236,11 +236,11 @@ const { log } = console;
         //A.say();
         // a1.say();
         class B extends A{ } 
-        //B.say(); //
+        // B.say(); //
         // log(A.name);
         // log(B.name);
 
-        class C extends B{
+        class C extends B{ 
             static greet(){
                 super.say(); // 类内部可用super对象调用
             }
