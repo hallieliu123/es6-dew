@@ -1,4 +1,5 @@
 const { log } = console;
+
 // async 其实是生成器generator的语法糖
 // 1. async 函数内的 await 后面跟 promise对象，也可以是原始类型值(但会被转成一个立即resolve的promise对象。这时是同步操作 );
 // 2. async 函数执行时一旦遇到 await 就先返回，先执行其他函数。async 函数返回一个promise对象。.then(()=>{});
@@ -69,7 +70,7 @@ const { log } = console;
         // 报错可以被catch捕获，但是阻止了后面代码执行
         async function f(){
             let r1 = await 1;
-            // log('r1--------->',r1); // resolve的结果
+            // log('r1--------->',r1); // resolve 的结果
             let r2 = await r1;
             abc
             return await r2;
@@ -159,7 +160,8 @@ const { log } = console;
                         // log('f4-data',data);
                     })
             }
-            // 继发执行 --> 一半不会这样去做，要等到上面的请求返回才去做下次请求，太耗时，并且有一个挂掉就全挂了
+            // 继发执行 --> 一半不会这样去做，要等到上面的请求返回才去做下次请求，太耗时.
+            // map,forEach循环加了asyn还是会并发执行，要继发执行必须用for循环才行 
             {   
                 function request(value){
                     return new Promise((res,rej)=>{
@@ -186,11 +188,11 @@ const { log } = console;
 // 8. 知道一下async函数的实现原理：它是generator和自动执行器封装成的一个函数。
 
 // 9. 了解内容：异步遍历器接口，它调用next()方法后返回的是promise对象，把原来的{value:'',done:false}作为then方法的参数传入；
-//    它被部署在对象的Synbol.asyncIterator属性上了。
+//    它被部署在对象的Symbol.asyncIterator属性上了。
 
 // 10. for await ...of...用来遍历异步/同步的遍历器对象
 
-// 11. 了解内容：异步generator函数
+// 11. 了解内容：异步generator函数 
         {
             async function* asyncG(){
                 yield 1;
@@ -211,3 +213,4 @@ const { log } = console;
                 });
         };
 }
+

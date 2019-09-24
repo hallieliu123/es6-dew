@@ -15,10 +15,10 @@ const { log } = console;
         let it1 = g();
         log(it1.next());
         log(it1.next('bla~'));
-        it1.throw('fail');
+        it1.throw('fail'); // 忽然领悟了体外错误，体内抛出的意义。
     }
 
-// 3. thunk函数--> javascript中的thunk函数是将一个多参函数，改写为一个只接收callback的单参函数。
+// 3. thunk函数--> javascript中的thunk函数是将一个多参函数，改写为一个只接收callback函数的单参函数。
 //    可以实现自动执行generator生成器函数, 即当异步操作有了结果自动交出执行权。
 //    使用thunk处理生成器，本质还是在回调函数里面处理数据。 
     {
@@ -62,7 +62,7 @@ const { log } = console;
             ft(10,20)(log);
         }
 
-        // 使用thunk函数自动执行generator生成器 --> 前提，yield 后面必须也是thunk函数
+        // 使用thunk函数自动执行generator生成器 --> 前提，yield 后面必须是thunk函数  
         {   
             // let fs = require('fs');
             // let ft = thunkify(fs.readFile); 
@@ -74,16 +74,16 @@ const { log } = console;
                 let res3 = yield ft('url3');
                 //  // 处理 res3
             }
-            function run(g){
-                let it = g();
+            function run(g){  
+                let it = g();  
                 function next(err,data){
                     // 处理错误 / 数据
-                    let obj = it.next(data);
-                    if( obj.done ) return;
+                    let result = it.next(data);
+                    if( result.done ) return;
                     result.value(next);
                 }
+                next();
             }
-
             run(g);
         }
     }

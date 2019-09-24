@@ -36,15 +36,15 @@ const { log } = console;
             * [Symbol.iterator](){
                 let keys = Object.keys(obj1);
                 for( let i=0;i<keys.length;i++ ){
-                    if(typeof obj1[keys[i]] != 'function'){
+                    // if(typeof obj1[keys[i]] != 'function'){
                         yield obj1[keys[i]]
-                    }
+                    // }
                 }  
             }
         };
-        // for(let value of obj1 ){  // 自动调用Symbol.iterator方法
-        //     log('value--->',value);
-        // }
+        for(let value of obj1 ){  // 自动调用Symbol.iterator方法
+            log('value--value->',value);     
+        }
         let it = obj1[Symbol.iterator]();
         // log('obj1---->',[...obj1]);
         // log('obj1--->',it.next());
@@ -94,10 +94,10 @@ const { log } = console;
             if( item > 100 ) break;
             // log('item--->',item);
         }
-        // 再为对象部署一次遍历接口
+        // 再为对象部署一次遍历接口   
         let obj1 = {a: '1',b: '2',c: '3'};
-        function* g2(){
-            let keys = Object.keys(this);
+        function* g2(){  
+            let keys = Object.keys(this);   
             for(let key of keys ){
                 yield [key,this[key]];
             }
@@ -140,10 +140,10 @@ const { log } = console;
     }
 // 7. yield* 遍历有iterator接口的对象 (包括字符串)
     {
-        function* g1(){
-            yield 1;
-            yield 2;
-            return 'g1 finished';
+        function* g1(){  
+            yield 1;    
+            yield 2;  
+            return 'g1 finished';  
         }
         function* g2(){
             let res = yield* g1(); // g1 return出的值赋值给res
@@ -216,7 +216,7 @@ const { log } = console;
 //    generator生成器，实际只是实现了半协程，因为它只能由调用generator函数的对象才能将执行权还给generator函数，全协程则是
 //    任何函数都可以让暂停的协程继续执行。
 
-// 9. 异步操作的同步化表达
+// 9. 异步操作的同步化表达   
     {
         // 1.使用generator封装异步请求  2.生成生成器，发起请求，异步->交出执行权  3.执行另外的函数。 4.恢复执行权，继续执行。
         function request(url){
@@ -275,6 +275,10 @@ const { log } = console;
 //  线程是程序执行时的最小单位，它是进程的一个执行流，是CPU调度和分派的基本单位，一个进程可以由很多个线程组成，线程间共享进程的所有资源。
 
 // 区别：1.进程是资源分配的最小单位，线程是程序执行的最小单位。2.一个进程可以有多个线程，每个进程有自己独立的内存空间，线程之间共享内存空间。
+
+
+
+
 
 
 

@@ -61,8 +61,8 @@ const { log } = console;
     {
         // 自定义模块
         // import module from './commonjsmodule.js';  // commonjs 对变量的缓存机制依然存在
-        // 已下载包模块
-        // import express from './express';
+        // 已下载包模块，// commonjs模块运行时才能确定输出接口，所以要采用整体加载
+        // import express from 'express'; 
         // let app = express();
     }
     // commonjs模块加载es6模块

@@ -57,18 +57,18 @@ const { log } = console;
             // log(data)
         });
 
-        // resolve(promise) 情况, 此时p1的状态决定了p2的状态，p2自身状态无效
+        // resolve(promise) 情况, 此时p1的状态决定了p2的状态，p2自身状态无效，// 实际是返回的原对象，看Promise.resolve();
         // reject(promise) 情况, 此时p2状态还是rejected.
         {
             let p1 = new Promise((res,rej)=>{ 
-                setTimeout(()=>{
+                setTimeout(()=>{  
                     // log('p1');
                     return res('p1 ok');
                     // return rej('p1 fail');
                 },1000)
             });
-            let p2 = new Promise((res,rej)=>{
-                res(p1);
+            let p2 = new Promise((res,rej)=>{    
+                res(p1);  
             });
             // log('p2--->',p2);
         }
@@ -121,7 +121,7 @@ const { log } = console;
     }
 // 5. Promise.resolve()的promise执行顺序问题-- 2 中已探究
 //    参数是promise对象直接返回，不是promise对象转为立即resolved的promise对象
-// 6.同步任务同步执行，异步任务异步执行(想用promise包装它，不管它是同步还是异步操作的函数)
+// 6.同步任务同步执行，异步任务异步执行(异想用promise包装它，不管它是同步还是步操作的函数)
     {
         const f = ( data ) => log('data--->',data);
         const func1 = () => log('first');
@@ -159,7 +159,7 @@ const { log } = console;
             .then(()=>move(oDiv,'left',200,1000))
     }
 
-// 8.手写promise静态方法finally()
+// 8.手写promise实例方法finally()
     {
         // 自己写的不和原生的一样，自己写的不管res还是rej回调函数都可以拿到 val / err
         // Promise.prototype.Finally = function(callback){
@@ -204,19 +204,14 @@ const { log } = console;
     }
 // 9.手写promise静态方法all();
     {
-        // 完全自己的版权，不知道正确与否；
-        Promise.prototype.Kall = function(...rest){
+        // 
+        Promise.Kall = function(...arr){
             let results = [];
-            for(let item of rest){
-                let rej = false;
-                Promise.resolve(item)
-                 .then(val=>{
-                     results.push(val)
-                 })
-                 .catch(err=>{
-                    rej = true;
-                 });
-                 if( rej ) return Promise.reject('出错啦。。。');
+            let promises = arr.map(item=>Promise.resolve(item));
+            let results = [];
+            let hasError = false;
+            for(let promise of promises){
+                results.push(await promise);
             }
             return Promise.resolve(results); 
         }   

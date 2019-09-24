@@ -96,11 +96,15 @@ const { log } = console;
 // 6. Object.setPrototypeof()覆盖原来的__proto__,Object.getPrototypeOf(),Object.create()
 // 7. Object.getOwnPropertyDescriptors()
 // 8. 对象的扩展运算符
-    {   
+    {   // 解构赋值
+        let {a,...b} = {a:'1',b:'2',c:'c'};
         const obj1 = Object.create({x:1,y:2});
         obj1.z = 3;
         // const { x, ...{y,z} } = obj1;
         // log('x,y,z-->',x,y,z);
+        // 取出参数对象的所有可遍历属性
+        let obj2 = {a:'1',b:'2',c:'c'};
+        let obj3 = { ...obj2 };
     }
 
 
