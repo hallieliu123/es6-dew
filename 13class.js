@@ -56,10 +56,10 @@ const { log } = console;
             greet(){
                 super.greet();
             }
-             say(){
-                 super.say();  // 实际是 A.prototype.say.call(this)
-                 log(this.age);
-             }
+            say(){
+                super.say();  // 实际是 A.prototype.say.call(this)
+                log(this.age);
+            }
          }
         // new A();
         // new B();
@@ -69,19 +69,19 @@ const { log } = console;
         // B.greet();
      }  
 
-// 4. 对原生构造函数的继承
+// 4. 对原生构造函数的继承  
      {
          class myArray extends Array{}
      }
 
 // 5. mixin 混入模式,将多个类的接口混入一个类
      {
-         class A{
+         class A{ 
              static say(){}
              drink(){}
          }
-         class B{
-             static greet(){ log('hello') }
+         class B{   
+             static greet(){ log('hello'); }
              handle(){}
              get html(){}
              set html(value){}
@@ -91,7 +91,7 @@ const { log } = console;
              manageData(){}
          }
          function copyProperties(Mix,m){
-            for(let key of Reflect.ownKeys(m)){ // *** 
+            for(let key of Reflect.ownKeys(m)){ // *** Reflect.ownKeys() 返回对象/类所有自身属性属性(包括不可枚举属性)，数组
                 if( key != 'constructor' && key != 'name' && key != 'prototype' ){
                     let desc = Object.getOwnPropertyDescriptor(m,key);
                     Object.defineProperty(Mix,key,desc);

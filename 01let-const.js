@@ -61,8 +61,6 @@ let { log } = console;
 
 // 至此，声明变量的方式都有: var,function; 声明的对象属于顶层对象window/global  //  let const class 不属于顶层对象属性;
 
-
-
 // 对数组循环的总结
     {
         let arr = ['a','b','c'];

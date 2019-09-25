@@ -1,6 +1,6 @@
 const { log } = console;
-// 1. export / import 基本使用： 以下多种写法熟练掌握几种常用的即可
-      // script标签添加上type='module'后默认是添加了defer命令(当然可以显示的更改)
+// 1. export / import 基本使用： 以下多种写法熟练掌握几种常用的即可   
+    // script标签添加上type='module'后默认是添加了defer命令(当然可以显示的更改)
 // import { a,b,c } from './14module2.js';  
     // log(a,b);
     // c();
@@ -69,7 +69,7 @@ const { log } = console;
     {
         // es6.js
         // let a = 1;
-        // export default a;  // 这种情况equire加载出的对象会缓存
+        // export default a;  // 这种情况require加载出的对象会缓存
         // a = null; // 在引入的模块不会生效
         // common.js
         // let es6Module = require('./es6.js'); 

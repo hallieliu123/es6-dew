@@ -1,7 +1,7 @@
 const { log } = console;
 
 // 1. es6中的类其实是es5中构造函数的语法糖. 
-//    基本使用对比， 类不可以直接调用；类的原型属性不可枚举；
+//    基本使用对比,类不可以直接调用；类的原型属性不可枚举；
     {
         function Person1(name,age){
             this.name = name;
@@ -100,7 +100,7 @@ const { log } = console;
                 return this; // 默认返回实例对象
             }
             say(){
-                console.log('hello');
+                console.log('hello'); 
             }
         }
         // log('Person1.prototype--->',Person1.prototype);
@@ -110,9 +110,9 @@ const { log } = console;
         let p1 = new Person1('Simon','17');
         // log('p1.__proto__',Object.kesys(Object.getPrototypeOf(p1))); // 实例的原型对象也不可枚举 
     }
-//  2. constructor 方法默认返回实例对象，当然返回也能被更改。如果类没有显示添加这个方法，它会被默认添加。
-//     class类必须用new命令来调用
-    {   
+//  2. constructor 方法默认返回实例对象，当然返回也能被更改。如果类没有被显示的添加这个方法，它会被默认添加。 
+//     class类必须用new命令来调用  
+    {
         class Person1{
             constructor(){
                 return Object.create(null);
@@ -138,7 +138,7 @@ const { log } = console;
         // new A(); // 报错
         class A{};
     }
-// 5. 只在类内部使用的属性或者方法叫做私有属性或者方法。私有方法:call() , Symbol, # / 私有属性: # ; 使用#定义还是个提案
+// 5. 只在类内部使用的属性或者方法叫做私有属性或者方法。私有方法: call(), Symbol, # / 私有属性: # ; 使用#定义还是个提案
     {
         function say( greeting ){
             log('--->',greeting);
@@ -202,10 +202,10 @@ const { log } = console;
         log(a1);
         let des = Object.getOwnPropertyDescriptor(A.prototype,"html");
     //    log(des);
-    //    log(A.prototype);
+    //    log(A.prototype); 
     }
 
-// 8. class类的generator函数
+// 8. class类的generator函数  
     {
         let a1 = new class{
             constructor(...rest){
@@ -242,7 +242,7 @@ const { log } = console;
 
         class C extends B{ 
             static greet(){
-                super.say(); // 类内部可用super对象调用
+                super.say(); // 类内部可用super对象调用 
             }
         }
         // C.greet();
@@ -287,8 +287,24 @@ const { log } = console;
 // 面试题系列：[1,2,3] -> 123,132,213,231,312,321  
 // [1,2,3,4,5] ->  
 
-// es5 中是如何定义对象的私有属性/方法的 ？？？什么是私有属性 ？？？ 什么是私有方法 ？？？
+// es5 中的公有方法，公有属性，私有方法，私有属性，特权方法 --> 完全不知道这些东西的作用
+{
+    function Person(name){
+        this.name = name;  // 公有属性
+        this.greet =function(){} // 公有方法
+    }
+    Person.prototype.say=function(){}  // 公有方法
 
+    function Student(){
+        var userName = ''; // 私有属性
+        function say(){ // 私有方法
+            log(userName);
+        }
+        this.greet = function(){ // 特权方法
+            return userName;
+        }
+    }
+}
 
 
 
