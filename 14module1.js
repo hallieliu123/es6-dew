@@ -89,7 +89,7 @@ const { log } = console;
     }   
 // 6. script加载模式: 
 //    <script></script> 同步加载js脚本
-//    <script src='' defer></script>  // 渲染完再执行，多个按顺序
+//    <script src='' defer></script>  // 渲染完再执行，多个按顺序 ( 渲染结束后DOMContentLoaded事件触发前)
 //    <script src='' async></script>  // 下载完就执行，多个不能预测顺序 
 //    defer(渲染完再执行) / async(下载完即执行) 是脚本异步加载，渲染引擎不会等脚本下载和执行，而是先执行后面的代码。
 //    defer会等到整个页面渲染结束再执行。async是一旦下载完成就中断渲染然后执行，执行完再接着渲染。
