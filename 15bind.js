@@ -14,7 +14,7 @@ const { log } = console;
         let fn = function(...list2){
             // 如果是用作构造函数则this应该是实例，直接调用this应该是传入的对象
             let cur = (new.target == fn) ? this : newThis;
-            self.apply(cur,[...list1,...list2])
+            self.apply(cur,[...list1,...list2]);
         }
         fn.prototype = Object.create(self.prototype); // 这里实际直接把fn.prototype整个改变了，所以constructor只能是新对象中原型上的constructor了
         log(fn.prototype.constructor == self);
