@@ -5,10 +5,10 @@ const { log } = console;
     {
         let s1 = new Set([2,3,4]);
         s1.add(1).add(5).add(6);
-        // for(let item of s1){
+        // for(let item of s1){   
         //     log( item );
         // }
-        let result1 = s1.delete(2);
+        let result1 = s1.delete(2);  
         // log('result1--->',result1);
         let len = s1.size;
         // log('s1.length--->',len);
@@ -17,7 +17,7 @@ const { log } = console;
         s1.clear();
         // log('s1--->',s1);
     }
-// 2.遍历 Set, keys() = values(),entries() = [keys(),values()];forEach();for...of... ,交/并/差 集
+// 2.遍历 Set, keys() = values(),entries() = [keys(),values()];forEach();for...of... ,交/并/差 集  
     {
         let s1 = new Set(['a','b','c']);
         let keys = s1.keys();
@@ -99,7 +99,6 @@ const { log } = console;
         // log(Array.from( m3, item=>{ log( 'item',item ); return item } ));
         // let m4 = new Map([['name','Miya'],[{'name':'Nick'},'Lord']]);
         // log('m4--->',m4);
-
         let m5 = new Map().set('name','Miya').set('title','princess');
         {
             let obj1 = {};
@@ -107,13 +106,14 @@ const { log } = console;
                 obj1[key] = value;
             }
             // log('obj1--->',obj1);
-            
             let m2 = new Map().set({'name':'Nick'},'Lord').set('name','Miya'); 
             let obj2 = [...m2];
             // log('obj2--->',obj2);
         }
     }
-// 7. weakMap键只接受对象， 只有 set(),get(),has(),delete() 4个方法，不可遍历，键是弱引用，值仍是强引用。
+// 7. weakMap键只接受对象,只有 set(),get(),has(),delete() 4个方法，不可遍历，键是弱引用，值仍是强引用。
+    // 弱引用：即垃圾回收机制不会将该引用计算在内。只要所引用的其他对象的其他引用被清除，垃圾回收机制就会释放所占用的内存。
+    // weakMap的专用场景就是它的键所对应的对象肯能在未来消失的场景。weakMap结构有助于防止内存泄漏。
     // {
         let obj1 = {'name':'Blue'};
         let obj2 = {'look':'handsome'};
@@ -123,7 +123,7 @@ const { log } = console;
         // m1.set(1,'abc'); // 报错，键只接受对象
         // log('m1-1-1->',m1);
     // }
-// 8. weakMap 使用: 1/为dom添加事件   2/为对象部署私有属性
+// 8. weakMap 使用: 1/为dom添加事件   2/为对象部署私有属性   
     {
         // let el1 = document.getElementById('a');
         // let el2 = document.getElementById('b');

@@ -1,7 +1,7 @@
 
 const { log } = console;
 
-// 1. 对象属性名和方法的简洁写法
+// 1. 对象属性名和方法的简洁写法   
     {
         let a1 = 'a1';
         let obj1 = {
@@ -9,7 +9,7 @@ const { log } = console;
             test(){
                 log('test1...');
             }
-        } 
+        }
         obj1.test();
 
         let obj2 = { // 取值器 / 赋值器 
@@ -28,10 +28,10 @@ const { log } = console;
         // log('y--->',obj2.y);
         // log('x--->',obj2.x);
     }
-// 2.Object.is();
+// 2.Object.is(); // 除了以下两个地方，其余与 === 特性相同
     {
-        // log('+0 === -0',+0 === -0);
-        // log('NaN === NaN',NaN === NaN);
+        // log('+0 === -0',+0 === -0);  // true
+        // log('NaN === NaN',NaN === NaN); // false
 
         // log( Object.is(+0,-0) );
         // log( Object.is(NaN,NaN));
@@ -70,7 +70,7 @@ const { log } = console;
 
         // for ... in ... 自身可枚举属性 + 继承属性
         // Object.keys() 自身可枚举属性
-        // Object.getOwnPropertyNames() 自身属性 + 自身不可枚举属性
+        // Object.getOwnPropertyNames() 自身属性 + 自身不可枚举属性  
     }
 // 5. Object.keys(),Object.values(),Object.entries()
     {
@@ -94,15 +94,15 @@ const { log } = console;
         }
     }
 // 6. Object.setPrototypeof()覆盖原来的__proto__,Object.getPrototypeOf(),Object.create()
-// 7. Object.getOwnPropertyDescriptors()
+// 7. Object.getOwnPropertyDescriptors(obj,'key') // 获取某个对象中某个属性的描述对象
 // 8. 对象的扩展运算符
-    {   // 解构赋值
+    {   // 1解构赋值
         let {a,...b} = {a:'1',b:'2',c:'c'};
         const obj1 = Object.create({x:1,y:2});
         obj1.z = 3;
         // const { x, ...{y,z} } = obj1;
-        // log('x,y,z-->',x,y,z);
-        // 取出参数对象的所有可遍历属性
+        // log('x,y,z-->',x,y,z);  // 扩展运算符用于解构只能复制对象自身属性，所以不行
+        // 2取出参数对象的所有可遍历属性
         let obj2 = {a:'1',b:'2',c:'c'};
         let obj3 = { ...obj2 };
     }

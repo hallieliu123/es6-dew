@@ -39,13 +39,18 @@
             '2':'c',
             length: 3
         };
-        Array.prototype.slice.call(a1)
+        Array.prototype.slice.call(a1)   
         // 等同于
         Array.from(a1);
 
         Array.from('hellowrold',(item,index)=> `${ index }-${item}-6` )
     }
-// 3.Array.of()
+// 3.Array.of()  一组值转为数组
+    Array.of(3)      // [3]
+    Array.of(3,4,5) // [3,4,5]
+
+    new Array(3) // 元素为空的长度为3的数组
+    new Array(3,4,5) // [3,4,5]
 
 // 4.find(),findIndex(),fill(),enties(),keys(),values(),includes(),空位处理
     {

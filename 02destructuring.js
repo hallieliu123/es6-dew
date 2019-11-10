@@ -1,8 +1,8 @@
 const { log } = console;
 
-// 1. 数组解构赋值 & 指定默认值( === undefined时默认值生效)
+// 1. 数组解构赋值 & 指定默认值( === undefined时默认值生效 )
     {
-        let [[a,b,...c],d = 4,e,f ] = [[1,2,3],,5,6,7];
+        let [[a,b,...c],d = 4,e,f ] = [[1,2,3],,5,6,7]; // ...结构赋值必须在最后一位
         log(a,b,c,d,e,f);
         
         // 玩玩而已
@@ -10,15 +10,15 @@ const { log } = console;
         let {0:first,[arr.length-1]:last,length:len} = arr;
         log('first--->',first);
         log('last--->',last);
-        log('len--->',len);
+        log('len--->',len);   
     }
 
 // 2. 对象的解构赋值 & 指定默认值( === undefined时默认值生效)         // {a:a}前面是匹配模式，后面是变量
     {
         let {a,a:{c:{e,f = 0}},b} = {a:{c:{e:5},d:10},b:{}};  
-        log('a->',a); 
-        log('e->',e); 
-        log('f->',f); 
+        log('a->',a);   
+        log('e->',e);     
+        log('f->',f);         
     }
 // 3. 字符串的解构赋值 & 指定默认值( === undefined时默认值生效) 
     {
@@ -44,9 +44,11 @@ const { log } = console;
         }
         matchVal1({x:10}); // 10 1
         matchVal2({x:10}); // 10 undefined
+        matchVal3({x:10}); // 10 undefined
 
         matchVal1({}); // 0 1
         matchVal2({}); // undefined undefined
+        matchVal3({}); // undefined undefined
 
         matchVal1(); // 0,1
         matchVal2(); // 0,1  
@@ -54,16 +56,9 @@ const { log } = console;
         // matchVal3(); // 报错  - 这个才能体现出来给函数参数指定默认值的重要性
     }
 
-
-
-
-
-
-
-
-// 字符串的扩展
-// includes(),startsWith(),endsWith(),模版字符串
-    {
+// 字符串的扩展  
+// includes(),startsWith(),endsWith(),模版字符串  
+    {  
         let str = 'hello';
         log(str.includes('l'));
         log(str.startsWith('he'));

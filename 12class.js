@@ -71,7 +71,7 @@ const { log } = console;
     //    log('p1.country',p1.country);
     //    log('Person.country--->',Person.country);
 
-       class Engineer extends Person{
+       class Engineer extends Person {
            constructor(name,age,salary){ // 整个constructor不写，可以不写super，创建对象时默认自己回去调用constructor和传值；
                 super(name,age);         // 写了constructor就必须写super,super就是手动去调用父类的constructor构造函数
                 this.salary = salary;
@@ -258,7 +258,7 @@ const { log } = console;
         // log('a1--->',a1);
     }
 
-// 11. new.targe属性: 返回new命令调用的构造函数
+// 11.new.targe属性: 返回new命令调用的构造函数  
     {
         function Person(name){
             if( new.target == Person ){

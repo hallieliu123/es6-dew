@@ -1,7 +1,7 @@
 const { log } = console;
 // bind | call | apply 方法的异同点
 
-// 1/ 都是用来改变this指向的；2/ 都是函数的方法，挂载在Function.prototype属性上
+// 1/ 都是用来改变this指向的；2/ 都是函数的方法，挂载在Function.prototype属性上      
 
 // 目标函数调用call,apply后直接执行，bind被调用后返回一个新函数，调用新函数才会执行目标函数
 

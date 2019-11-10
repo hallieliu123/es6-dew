@@ -1,18 +1,18 @@
 let { log } = console;
 
-// 博学之，审问之，慎思之，明辨之，笃行之。 - 《礼记·中庸》 
+// 博学之，审问之，慎思之，明辨之，笃行之。 - 《 礼记·中庸 》 
 
 // let
 // 1. 没有变量声明提升（ ** 导致出现了暂时性死区 -- 即在未用let声明变量之前，该变量是不可用的，否则报错 ）
-// 2. 一旦声明，变量即绑定该作用域，不受外层作用域影响 
+// 2. 一旦声明，变量即绑定该作用域，不受外层作用域影响     
     {
-        let a = 123;  
+        let a = 123;
         {
             // log( a );
             // let a = 456;
         }
     }
-// 3. 使用let声明变量，不允许重复声明,否则会报错
+// 3. 使用let声明变量，不允许重复声明,否则会报错  
     {
         // var b = 1;
         // var b = 2;
@@ -59,7 +59,7 @@ let { log } = console;
         }
     }
 
-// 至此，声明变量的方式都有: var,function; 声明的对象属于顶层对象window/global  //  let const class 不属于顶层对象属性;
+// 至此，声明变量的方式都有: var,function; var,function 声明的对象属于顶层对象 window/global  //  let const class声明的不属于顶层对象属性;
 
 // 对数组循环的总结
     {
@@ -88,5 +88,22 @@ let { log } = console;
 // 注意for...in...迭代 自身可枚举属性 + 继承属性(es5中除从原生构造函数外继承的属性外，其他皆可获取。es6中,
 // 从父类继承的父类自身属性与子类合并在一起成为子类自身的属性了，不可遍历es6类创建对象上原型上的属性。）
 
-// typeof 检测 number / string / boolean / undefined / object / function
+// typeof 检测 6 种返回： number / string / boolean / undefined / object / function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

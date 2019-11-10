@@ -7,7 +7,7 @@ const { log } = console;
         });
         // log('p1--->',p1);
     }
-// 2. ***执行顺序问题，先执行宏任务，再执行微任务，本轮执行结束后，下一轮再执行被推入栈的任务 
+// 2. *** event loop
     {
         // log('1');
         // setTimeout(()=>{ log('2') },0);
@@ -57,6 +57,7 @@ const { log } = console;
             // log(data)
         });
 
+        /* 发现有问题 ******** */  
         // resolve(promise) 情况, 此时p1的状态决定了p2的状态，p2自身状态无效，// 实际是返回的原对象，看Promise.resolve();
         // reject(promise) 情况, 此时p2状态还是rejected.
         {
@@ -119,8 +120,9 @@ const { log } = console;
                 });
         }
     }
-// 5. Promise.resolve()的promise执行顺序问题-- 2 中已探究
-//    参数是promise对象直接返回，不是promise对象转为立即resolved的promise对象
+// 5. Promise.resolve(),参数是promise对象直接返回，不是promise对象转为立即resolved的promise对象
+
+/** 看出问题 */
 // 6.同步任务同步执行，异步任务异步执行(异想用promise包装它，不管它是同步还是步操作的函数)
     {
         const f = ( data ) => log('data--->',data);
@@ -209,7 +211,6 @@ const { log } = console;
             let results = [];
             let promises = arr.map(item=>Promise.resolve(item));
             let results = [];
-            let hasError = false;
             for(let promise of promises){
                 results.push(await promise);
             }

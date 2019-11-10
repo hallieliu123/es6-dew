@@ -95,7 +95,8 @@ const { log } = console;
 //    defer会等到整个页面渲染结束再执行。async是一旦下载完成就中断渲染然后执行，执行完再接着渲染。
 
 
-// es6模块化默认是严格模式，顶层对象this是undefined；
+// es6模块化默认是严格模式，顶层对象this是undefined，不是window,所以变量都不会挂载在window上了(包括用var定义的变量);
+//  但是window对象还是能访问到的。
 
 
 

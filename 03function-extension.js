@@ -1,8 +1,8 @@
-// 1.函数参数默认值
+// 1.函数参数默认值   
 
 // 2.解构赋值与函数参数默认值
 
-//   区分函数参数中对  对象的解构赋值默认值 和 函数参数的默认值
+// 区分函数参数中对  对象的解构赋值默认值 和 函数参数的默认值
 
 function m1({ x = 0, y = 0 } = { }){
     return [ x, y ]
@@ -25,11 +25,11 @@ m2({ x: 3, y:8 });
 m1({ x: 3 });
 m2({ x: 3 });
 
-// 3. 函数参数作用域
+// 3. 函数参数作用域   --- 一旦给函数参数指定默认值，函数初始化时就会形成一个单独的作用域；是{}的父作用域
 
 {  // 以下俩例子也太变态了。完全没有实际意义么
     var x = 1;
-    function foo( x, y = function(){ x = 2 }){
+    function foo( x, y = function(){ x = 2 }){ 
         
         var x = 3;
 
@@ -39,8 +39,8 @@ m2({ x: 3 });
 
     }
     
-    foo(); //
-    x  //
+    foo(); // 3
+    x  // 1
     
 }
 
@@ -56,8 +56,8 @@ m2({ x: 3 });
 
     }
 
-    foo(); //
-    x //
+    foo(); // 2
+    x // 1
 
 }
 
@@ -67,12 +67,12 @@ m2({ x: 3 });
         throw new Error( 'Missing Parameter!' );
     }
 
-    function f( mustBeProvided = throwIfMissing() ){}
+    function f( mustBeProvided = throwIfMissing() ){}   
 
     // f();
 
-// 5.rest参数，rest参数是数组 
-    function add( ...values ){
+// 5.rest参数，rest参数是数组    
+    function add( ...values ){     
         let sum = 0;
         for( let value of values ){
             sum += value; 
@@ -80,7 +80,7 @@ m2({ x: 3 });
         return sum;
     }
     console.log('add--->',add(1,2,3,4,5))
-    function push( arr, ...items ){
+    function push( arr, ...items ){ 
         items.forEach( item => {
             arr.push( items )
         });
@@ -97,7 +97,7 @@ m2({ x: 3 });
             },1000)
         }
         var myId = 1;
-        // foo.call({ myId: 2 }); // 
+        // foo.call({ myId: 2 }); // 2
     }
     {
         function Timer(){
@@ -111,8 +111,8 @@ m2({ x: 3 });
             },1000)
         }
         var myTimer = new Timer(); 
-        // setTimeout(()=>{ console.log( 's1--->', myTimer.s1 )},3100); // 3
-        // setTimeout(()=>{ console.log( 's2--->', myTimer.s2 )},3100); // NaN
+        // setTimeout(()=>{ console.log( 's1--->', myTimer.s1 )},3100); // 3    
+        // setTimeout(()=>{ console.log( 's2--->', myTimer.s2 )},3100); // NaN    
     }
     {
         function foo(){
@@ -124,10 +124,10 @@ m2({ x: 3 });
                 }
             }
         }
-        var f = foo.call({ myId: 1});
-        f.call({ myId: 2 })()();
-        f().call({ myId: 3 })();
-        f()().call({ myId: 4 });
+        var f = foo.call({ myId: 1}); 
+        f.call({ myId: 2 })()();  // 1 
+        f().call({ myId: 3 })();  // 1
+        f()().call({ myId: 4 });  // 1
     }
 
     // 箭头函数嵌套使用
@@ -156,7 +156,7 @@ m2({ x: 3 });
         let a2 = insert( 10 ).into( [1,2] ).after(1);
         console.log('a2--->',a2);
     }
-    // 管道机制部署   第一个函数的返回值是第二个函数的参入，依次类推～  -- 妙哉妙哉 ！！！
+    // 管道机制部署   第一个函数的返回值是第二个函数的参数，依次类推～  -- 妙哉妙哉 ！！！
     {
         const pipeline = (...funcs) => value => funcs.reduce((prev,cur)=>{
             return cur(prev);
@@ -166,7 +166,7 @@ m2({ x: 3 });
         const result = pipeline( plus,mult )( 5 );
         console.log('result--->',result);
     }
-    // 尾调用定义，尾调用优化意义，尾递归
+    // 尾调用定义，尾调用优化意义，尾递归  
     
     {
         function factorial1( num ){
@@ -180,7 +180,7 @@ m2({ x: 3 });
         }
 
         factorial1(5);
-        console.log('factorial2(5)---->',factorial2(5,1));
+        console.log('factorial2(5)---->',factorial2(5,1));   
         
         function tailFactorial( n , total ){
             if( n === 1 ) return total;
