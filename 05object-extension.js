@@ -57,15 +57,16 @@ const { log } = console;
 
         // 深拷贝 对象 / 数组 { a: { m: 'node' },b: { n: 'koa' } } / [{ a: { m: 'node' },b: { n: 'koa' },{}]
         function deepClone( obj ){
-            let objNew = new obj.constructor();
-            for( let key in obj ){
-                if( typeof obj === 'object' ){
+            let objNew = obj.constructor();
+            for(let key in obj){
+                if(typeof obj[key] === 'object'){
                     objNew[key] = deepClone(obj[key]);
+                }else{
+                    objNew[key] = obj[key];
                 }
-                objNew[key] = obj[key];
             }
             return objNew;
-        }
+         }
 // 4.可枚举属性 configurable,writable,value,enumerable
 
         // for ... in ... 自身可枚举属性 + 继承属性
