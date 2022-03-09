@@ -1,4 +1,4 @@
-// 1.函数参数默认值   
+// 1.函数参数默认值 
 
 // 2.解构赋值与函数参数默认值
 
@@ -7,6 +7,7 @@
 function m1({ x = 0, y = 0 } = { }){
     return [ x, y ]
 }
+
 
 
 function m2( { x, y } = { x: 0, y: 0 } ){
@@ -25,7 +26,7 @@ m2({ x: 3, y:8 });
 m1({ x: 3 });
 m2({ x: 3 });
 
-// 3. 函数参数作用域   --- 一旦给函数参数指定默认值，函数初始化时就会形成一个单独的作用域；是{}的父作用域
+// 3. 函数参数作用域   --- 一旦给函数参数指定默认值，函数初始化时函数参数部分就会形成一个单独的作用域；是{}的父作用域
 
 {  // 以下俩例子也太变态了。完全没有实际意义么
     var x = 1;
@@ -112,7 +113,7 @@ m2({ x: 3 });
         }
         var myTimer = new Timer(); 
         // setTimeout(()=>{ console.log( 's1--->', myTimer.s1 )},3100); // 3    
-        // setTimeout(()=>{ console.log( 's2--->', myTimer.s2 )},3100); // NaN    
+        // setTimeout(()=>{ console.log( 's2--->', myTimer.s2 )},3100); // 0 
     }
     {
         function foo(){
@@ -166,7 +167,12 @@ m2({ x: 3 });
         const result = pipeline( plus,mult )( 5 );
         console.log('result--->',result);
     }
-    // 尾调用定义，尾调用优化意义，尾递归  
+    // 尾调用定义: 函数最后一步调用另一个函数叫做尾调用
+    // 尾调用的意义: 函数调用会在内存中形成一个调用记录即‘调用帧’,保存调用位置和内部变量.如果在A函数中调用B,那么在A的调用帧
+    // 上方就有一个B的调用帧,如果B函数又调用了C函数,那么B上方又有一个C的调用帧,依此类推就形成了'调用栈'.如果说在只在一个函数的
+    // 最后一步调用另一个函数,并且被调用的函数内部没有使用到外部函数的变量或方法,那么这个函数的调用帧就不被保留了,也就是内部函数调用帧取代了外部函数的调用帧,
+    // 这样就节省了内存。
+    // 递归和尾递归: 递归非常耗费内存,因为需要同时保留很多个调用帧,容易造成栈溢出; 而尾递归只需保留一个调用帧,所以尾递归永远不会发生'栈溢出'
     
     {
         function factorial1( num ){
@@ -181,7 +187,7 @@ m2({ x: 3 });
 
         factorial1(5);
         console.log('factorial2(5)---->',factorial2(5,1));   
-        
+        // 对递归的优化 1 - 使用尾递归
         function tailFactorial( n , total ){
             if( n === 1 ) return total;
             return tailFactorial( n - 1 , n * total);
@@ -211,4 +217,22 @@ m2({ x: 3 });
         console.log('factorial(5)',factorial1(5),factorial2(5,1),factorial3(5),factorial4(5),factorial5(5));
     }
 
-    
+    // 对递归的优化 2 - 递归改为循环
+    {
+        function sum(x, y) {
+            if(y>0) {
+                return sum.bind(this, x+1, y-1);
+            } else {
+                return x;
+            }
+        }
+        function trampoline(f) {
+            while(f && f instanceof Function){
+                f = f();
+            }
+            return f;
+        }
+    }
+
+// 尾调优化只在严格模式下起作用
+

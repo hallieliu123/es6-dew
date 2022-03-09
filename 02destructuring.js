@@ -7,10 +7,10 @@ const { log } = console;
         
         // 玩玩而已
         let arr = ['a','b','c'];
-        let {0:first,[arr.length-1]:last,length:len} = arr;
+        let {0:first,[arr.length-1]:last,length:len} = arr; //数组本身就是特殊的对象，这是对数组进行对象属性的解构
         log('first--->',first);
         log('last--->',last);
-        log('len--->',len);   
+        log('len--->',len);
     }
 
 // 2. 对象的解构赋值 & 指定默认值( === undefined时默认值生效)         // {a:a}前面是匹配模式，后面是变量
