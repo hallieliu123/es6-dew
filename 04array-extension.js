@@ -63,7 +63,7 @@
 
 // 4.find(),findIndex(),fill(),enties(),keys(),values(),includes(),空位处理
 // find(),findIndex() 有查到符合条件第一个成员不再继续遍历的特性
-// enties(),keys(),values() 返回遍历器对象，可用for...of去遍历
+// arr.enties(),arr.keys(),arr.values() 返回遍历器对象，可用for...of去遍历
     {
         let a1 = [1,2,3,4,5];
         let value1 = a1.find( ( item,index )=>{ log('find value-->',index,item); return item > 2 } )
