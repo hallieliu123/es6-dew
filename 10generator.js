@@ -1,7 +1,7 @@
 const { log } = console;
 // 1. generator（生成器）处理异步任务，内部封装多个异步任务，每步异步操作用yield注明就可以了。
 
-// 2. generator（生成器）体内输入，体外输出数据方法，及体外错误体内抛出；
+// 2. generator暂停和恢复执行，体内外的数据交换，错误处理机制，这些特性使得其拥有异步编程的完成解决方案
     {
         function* g(){
             try{
@@ -20,7 +20,7 @@ const { log } = console;
 
 // 3. thunk函数--> javascript中的thunk函数是将一个多参函数，改写为一个只接收callback函数的单参函数。
 //    可以实现自动执行generator生成器函数, 即当异步操作有了结果自动交出执行权。
-//    使用thunk处理生成器，本质还是在回调函数里面处理数据。 
+//    使用thunk处理生成器，本质还是在回调函数里面处理数据.
     {
         // 模拟thunk函数
         {
@@ -84,7 +84,7 @@ const { log } = console;
                 }
                 next();
             }
-            run(g);
+            // run(g);
         }
     }
 // 4. co模块也可以实现自动执行generator生成器函数, 即当异步操作有了结果自动交出执行权。

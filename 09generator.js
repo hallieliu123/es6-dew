@@ -18,15 +18,34 @@ const { log } = console;
         // log( it.next() );
         // log( it.next() );
     }
-// 2.generator生成器内部yield是暂停标志；
+// 2.generator生成器内部yield是暂停标志；并且只有在调用遍历对象的next方法后，内部指针指向该语句时才会执行yield后的表达式，
+//  等于提供了一个‘惰性求值’的方法。
+// yield语句构成的表达式本身时没有值的，总是等于undefined;
     {
         function* g(){
             log('blablabla~');
         }
         let it = g(); // 内部代码不会执行
-        it.next();
+        // it.next();
     }
-// 3.为对象部署一个遍历接口 
+    {
+        let arr = [1, [[2, 3], 4,], [5, 6]];
+        function* generator(arr) {
+            for(let i=0; i<arr.length; i++) {
+                if(Array.isArray(arr[i])) {
+                    yield* generator(arr[i]); // yield* 用于在一个generator函数中调用另一个generator函数,相当于使用for...of...内部yield出来
+                } else {
+                    yield arr[i];
+                }
+            }
+        }
+        for (let item of generator(arr)) {
+            // console.log('test--->', item);
+        }
+    }
+// 3.iterator接口的关系: 任何一个对象的Symbol.iterator方法等于该对象的遍历器对象生成函数, 调用该函数会返回该对象的遍历器对象;
+// generator函数本身就是遍历对象生成函数,因此完全可以将generator函数赋值给Symbol.iterator来部署iterator接口
+    // 为对象部署一个遍历接口 
     {
         // { value: value, done: false}
         let obj1 = {
@@ -43,7 +62,7 @@ const { log } = console;
             }
         };
         for(let value of obj1 ){  // 自动调用Symbol.iterator方法
-            log('value--value->',value);     
+            // log('value--value->',value);     
         }
         let it = obj1[Symbol.iterator]();
         // log('obj1---->',[...obj1]);
@@ -68,13 +87,42 @@ const { log } = console;
             return 'finished'
         }
         let it = g();
-        it.next(); // to start
+        // it.next(); // to start
         // it.next('a');// 1->a , continue
         // it.next('b');// 2->b { value: 'finished',done: true}
-        // it.next();   
+        // it.next();
     }
-
-// 5. for...of...; 注意点：不会遍历生成器最后的return语句；
+    {
+        function* f() {
+            for(let i=0; true; i++) {
+                let reset = yield i;
+                if(reset) i = -1;
+            }
+        }
+        const g = f();
+        // log(g.next()); // {value: 0, done: false}
+        // log(g.next()); // {value: 1, done: false}
+        // log(g.next()); // {value: 2, done: false}
+        // log(g.next(true)); // {value: 0, done: false}
+    }
+    {
+        // 第一次调用next不可以传惨，如果想第一次调用就传参，可以包装一下
+        function* genFunc(args) {
+            log('first input--->', yield);
+            return 'fineshed';
+        }
+        function wrapper(genFunc) {
+            return function(...args) {
+                const it = genFunc(args);
+                it.next();
+                return it;
+            }
+        }
+        const g = wrapper(genFunc);
+        // g().next('hello');
+    }
+// 5. for...of...可以自动遍历generator生成的遍历器对象; 注意点：不会遍历生成器最后的return语句；
+// for..of; 解构赋值，...扩展运算符，Array.from()内部都是调用的遍历接口
     {
         // 计算斐波那契数列
         function* g1(){
@@ -108,7 +156,7 @@ const { log } = console;
         // log('it2--->',...obj1); // 会去自动调用遍历对象生成器函数
         // for...of 当然也能遍历了
     }
-// 6. generator（生成器）的return方法： return('param作为next()返回value的值')；try{ }finally{ }
+// 6. generator（生成器）的return方法:return('param作为返回的value的值')；try{ }finally{ }必须要finally代码块内执行完才会执行return语句
     {
         function* g1(){
             yield 1;
@@ -117,9 +165,9 @@ const { log } = console;
             yield 4;
         }
         let it1 = g1();
-        // log( 'it1------->',it1.next() );
-        // log( 'it1------->',it1.return('b') );
-        // log( 'it1------->',it1.next() );
+        // log( 'it1------->',it1.next() ); // {value: 1, done: false}
+        // log( 'it1------->',it1.return('b') ); // {value: 'b', done: true}
+        // log( 'it1------->',it1.next() );// {value: undefined, done: true}
 
         function* g2(){
             try{
@@ -147,10 +195,14 @@ const { log } = console;
         }
         function* g2(){
             let res = yield* g1(); // g1 return出的值赋值给res
-            // log('res-->',res);
+            log('res-->',res); // res--> g1 finished
+            yield* 'helloworld';
             yield 3;
         }
         let  it1 = g2();
+        for(let item of it1){
+            log(item); // 并不会遍历到 return 'g1 finished';
+        }
         // log('yield*------------->');
         // log(it1.next());
         // log(it1.next());
@@ -216,7 +268,7 @@ const { log } = console;
 //    generator生成器，实际只是实现了半协程，因为它只能由调用generator函数的对象才能将执行权还给generator函数，全协程则是
 //    任何函数都可以让暂停的协程继续执行。
 
-// 9. 异步操作的同步化表达   
+// 9. 异步操作的同步化表达
     {
         // 1.使用generator封装异步请求  2.生成生成器，发起请求，异步->交出执行权  3.执行另外的函数。 4.恢复执行权，继续执行。
         function request(url){
@@ -250,11 +302,11 @@ const { log } = console;
             }
             function* g(value){
                 let value1 = yield step1(value);
-                log('value1--->',value1);
+                // log('value1--->',value1);
                 let value2 = yield step2(value1);
-                log('value2--->',value2);
+                // log('value2--->',value2);
                 let value3 = yield step3(value2);
-                log('value3--->',value3);
+                // log('value3--->',value3);
                 yield step4(value3);
             }
             function scheduler(it){
@@ -275,10 +327,5 @@ const { log } = console;
 //  线程是程序执行时的最小单位，它是进程的一个执行流，是CPU调度和分派的基本单位，一个进程可以由很多个线程组成，线程间共享进程的所有资源。
 
 // 区别：1.进程是资源分配的最小单位，线程是程序执行的最小单位。2.一个进程可以有多个线程，每个进程有自己独立的内存空间，线程之间共享内存空间。
-
-
-
-
-
 
 
