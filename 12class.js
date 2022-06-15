@@ -89,36 +89,42 @@ const { log } = console;
 //---------------------------------------------------------------------------------------------------------------------
 
 // 1. 基本使用,class类其实是es5构造函数的语法糖，它使得对象的原型写法更加清晰，更加接近面向对象编程的语法而已。
-//    表达式写法/声明式写法
-//    类的数据类型就是函数，类本身就指向其构造函数。
-//    class类内部定义的方法即类的prototype对象是不可枚举的。
+//    a基本使用对比,类不可以直接调用,必须用new命令来调用；类的原型属性不可枚举, 并且实例的原型对象也不可枚举；
     {
-        class Person1{
-            constructor(name,age){
-                this.name = name;
-                this.age = age;
-                return this; // 默认返回实例对象
-            }
-            say(){
-                console.log('hello'); 
+        class A {
+            a = 'hello';
+            static b = 'world';
+            say() {
+                log('haha~');
             }
         }
-        // log('Person1.prototype--->',Person1.prototype);
-        // log('Object.keys(Person1.prototype)--->',Object.keys(Person1.prototype));
-        // log(typeof Person1);
-        // log(Person1.prototype.constructor === Person1);
-        let p1 = new Person1('Simon','17');
-        // log('p1.__proto__',Object.kesys(Object.getPrototypeOf(p1))); // 实例的原型对象也不可枚举 
+        log('类的原型的描述符对象--->', Object.getOwnPropertyDescriptor(A.prototype, 'say'));//{writable: true, enumerable: false, configurable: true, value: ƒ}
+        log('类的原型--->', Object.keys(A.prototype)); // []  类的原型属性不可枚举
+        log('类的原型--->', Object.getOwnPropertyNames(A.prototype)); // ['constructor', 'say']
+        const t = new A();
+        log('t的原型对象也不可枚举---->', Object.keys(Object.getPrototypeOf(t))); // []
+        log('t的原型对象也不可枚举---->', Object.getOwnPropertyNames(Object.getPrototypeOf(t))); //['constructor', 'say']
     }
+//    b表达式写法/声明式写法
+    {
+        const A = class Me {} // Me 只能类内部使用
+        class AA {}
+    }
+//    c类的数据类型就是函数，类本身就指向其构造函数。
+    {
+        class Point {}
+        log(typeof Point === 'function'); // true
+        log(Point === Point.prototype.constructor); // true
+    }
+
 //  2. constructor 方法默认返回实例对象，当然返回也能被更改。如果类没有被显示的添加这个方法，它会被默认添加。 
-//     class类必须用new命令来调用  
     {
         class Person1{
             constructor(){
                 return Object.create(null);
             }
         }
-        let p1 = new Person1();
+        // let p1 = new Person1();
         // log(p1 instanceof Person1);  // false
     }
 //  3. hasOwnProperty();对象的自身属性检测
@@ -138,29 +144,41 @@ const { log } = console;
         // new A(); // 报错
         class A{};
     }
-// 5. 只在类内部使用的属性或者方法叫做私有属性或者方法。私有方法: call(), Symbol, # / 私有属性: # ; 使用#定义还是个提案
+// 5. 只在类内部使用的属性或者方法叫做私有属性或者方法。私有方法: call(), #; 私有属性: # ; 使用#定义还是个提案
+//    存值函数和取值函数是定义在属性的descriptor(描述符对象上)的;
     {
         function say( greeting ){
             log('--->',greeting);
+            this.g = greeting;
         }
         class A{
-            // constructor(name = 'Simon'){
-            //     #name = name;
-            // }
+            #name = 'Simon';
+            #sum(v1, v2) {
+                return v1 + v2;
+            }
+            getVal(v1, v2) {
+                return this.#sum(v1, v2)
+            }
             print(greeting){
                 say.call(this,greeting);
             }
-            // get name(){
-            //     return #name;
-            // }
-            // set name(value){
-            //     #name = value;
-            // }
+            get name(){
+                return this.#name;
+            }
+            set name(value){
+                this.#name = value;
+            }
         }
         let a1 = new A();
         // a1.print('Hi');
+        log('a1--->', a1); 
+        // log(a1.name); // Simon
+        // log('a1.sum()--->', a1.sum(1, 2)); // a1.sum is not a function
+        // log('a1.getVal()--->', a1.getVal(1, 2)); // 3
+        // log('A.prototype--->', A.prototype);
+        // log(Object.getOwnPropertyDescriptor(A.prototype, 'name')); // {enumerable: false, configurable: true, get: ƒ, set: ƒ}
     }
-        
+
 // 6. this指向问题，绑定this的两种方法，bind,箭头函数
     {
         class A{
@@ -199,8 +217,8 @@ const { log } = console;
         // a1.html = 789;
         // log(a1.html);
         log(Object.getPrototypeOf(a1)); // html成为了实例对象的访问器属性
-        log(a1);
-        let des = Object.getOwnPropertyDescriptor(A.prototype,"html");
+        // log(a1);
+        // let des = Object.getOwnPropertyDescriptor(A.prototype,"html");
     //    log(des);
     //    log(A.prototype); 
     }
@@ -233,7 +251,7 @@ const { log } = console;
             }
         }
         let a1 = new A();
-        //A.say();
+        // A.say();
         // a1.say();
         class B extends A{ } 
         // B.say(); //
@@ -283,15 +301,35 @@ const { log } = console;
         }
     }
 
+// 面试题系列：[1,2,3] -> [1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]
+// [1,2,3,4]
+{
+    // 
+    function getAllCombination(arr) { // [1,2,3,4]
+        if(arr.length === 2) return [[arr[0], arr[1]],[arr[1], arr[0]]];
+        let result = [];
+        for(let i=0; i<arr.length; i++) {
+            const arrNew = getArrNew(arr, i); //[2,3,4]           | [3,4] | [2,4]       |  [2,3]
+            const temp = getAllCombination(arrNew); // [[3,4],[4,3]]  | [[2,4], [4,2]]      |  [[2,3],[3,2]]
+            for(let j=0; j<temp.length; j++) {
+                temp[j].splice(0, 0, arr[i]);  // [[2,3,4],[2,4,3]]   | [[3,2,4], [3,4,2]]  |  [[4,2,3],[4,3,2]]
+            }
+            result = result.concat(temp); // [[2,3,4],[2,4,3]]
+        }
+        return result;
+    }
+    function getArrNew(arr, index) {
+        const arrNew = [...arr];
+        arrNew.splice(index, 1);
+        return arrNew;
+    }
+}
 
-// 面试题系列：[1,2,3] -> 123,132,213,231,312,321  
-// [1,2,3,4,5] ->  
-
-// es5 中的公有方法，公有属性，私有方法，私有属性，特权方法 --> 完全不知道这些东西的作用
+// es5 中的公有方法，公有属性，私有方法，私有属性，特权方法(可以访问私有属性和私有方法) --> 完全不知道这些东西的作用
 {
     function Person(name){
         this.name = name;  // 公有属性
-        this.greet =function(){} // 公有方法
+        this.greet =function(){} // 特权方法
     }
     Person.prototype.say=function(){}  // 公有方法
 

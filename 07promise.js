@@ -32,6 +32,32 @@ const { log } = console;
         // });
         // log('7');
         // 1,4,7,5,6,2,3
+
+        // console.log(1);
+        // setTimeout(()=>{
+        //     console.log(2);
+        //     Promise.resolve().then(()=>{console.log(3);});
+        // });
+        // Promise.resolve().then(()=>{console.log(4)});
+        // setTimeout(()=>{console.log(5)});
+        // console.log(6);
+        // 1,6,4,2,3,5
+
+        // console.log(1);
+        // setTimeout(()=>{
+        //     console.log(2);
+        //     Promise.resolve().then(()=>{
+        //         console.log(3);
+        //         setTimeout(()=>{console.log(7)});
+        //     });
+        // });
+        // Promise.resolve().then(()=>{console.log(4)});
+        // setTimeout(()=>{
+        //     console.log(5);
+        //     Promise.resolve().then(()=>{console.log(8);});
+        // });
+        // console.log(6);
+        // 1,6,4,2,3,5,8,7
     }
 // 3.then()
 // catch() promise对象的错误具有‘冒泡’性质,它会一直向后传递,直到被promise.catch捕获,如果没有catch去捕获这个错误,它不会传递到外层代码能被try{}catch(){}捕获,浏览器会直接报错;

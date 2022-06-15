@@ -1,7 +1,7 @@
 const { log } = console;
 
-// 1. class 的继承，子类必须去调用super()，否则会报错。因为super()是去调用父类的构造函数。ES5生成实例时是先创建子类的this，然后将父类的方法属性绑定
-//    到子类的this上。ES6是类是先调用super创建父类this,然后子类的构造函数再加工改造父类的this。
+// 1. class 的继承，子类必须去调用super()，否则会报错。因为super()是去调用父类的构造函数。
+//    类中的this: ES5生成实例时是先创建子类的this，然后将父类的方法属性绑定到子类的this上。ES6是类是先调用super创建父类this,子类的this是继承父类的this，然后对其加工。
      {
          class A{}
          class B extends A{
@@ -26,7 +26,7 @@ const { log } = console;
      }
 
 
-// 3. super关键字，两种用法：1为函数：去调用父类构造函数  2为对象：当调用父类静态方法是指向父类，当调用父类方法或属性是指向父类原型对象；
+// 3. super关键字，两种用法：1作为函数调用时代表父类构造函数  2调用普通方法代表父类原型对象，3调用父类静态方法是指向父类 (都是方法哈，静态属性和普通属性都无法通过super获取)
 //    使用super对象调用父类方法，内部this绑定子类
      {
          class A{  // new.target 返回的是new命令所作用的构造函数
@@ -91,8 +91,9 @@ const { log } = console;
              manageData(){}
          }
          function copyProperties(Mix,m){
-            for(let key of Reflect.ownKeys(m)){ // *** Reflect.ownKeys() 返回对象/类所有自身属性属性(包括不可枚举属性)，数组
-                if( key != 'constructor' && key != 'name' && key != 'prototype' ){
+             // Reflect.ownKeys(类) 返回类本身可访问的属性：name,静态属性，静态方法，prototype, length(构造函数参数个数)
+            for(let key of Reflect.ownKeys(m)){ // *** Reflect.ownKeys() 返回对象/类所有自身属性属性(包括不可枚举属性)返回数组 和 Object.getOwnPropertyNames()一致
+                if(key != 'name' && key != 'prototype' && key != 'length'){
                     let desc = Object.getOwnPropertyDescriptor(m,key);
                     Object.defineProperty(Mix,key,desc);
                 }
@@ -114,6 +115,4 @@ const { log } = console;
 
 
 // 子类继承父类时，父类的属性也是子类的属性，父类的方法是子类原型__proto__上的方法。
-
-
 
